@@ -2,7 +2,7 @@ pico-8 cartridge // http://www.pico-8.com
 version 8
 __lua__
 function _init()
- a = 5
+ menu = true
 end
 
 function _draw()
@@ -23,6 +23,30 @@ function _update()
  end
 end
 
+-- menu stuff
+function draw_menu()
+ cls()
+ color(8)
+ print "the internet vs ludum dare"
+ color(9)
+ print "the launch power struggle"
+ color(15)
+ print "a ld39 game"
+ color(10)
+ print "inspired by every ld launch"
+ color(3)
+ print "by team (\""
+ print("\x97 to start!", 30, 40, 5) 
+end
+
+function update_menu()
+ if btn(5) then
+  menu = false
+ end
+end
+
+-- draw stuff
+
 function draw_screen()
  print "omg becky"
 end
@@ -34,6 +58,8 @@ end
 function game_logic()
  // do things here!
 end
+
+
 
 
 __gfx__
