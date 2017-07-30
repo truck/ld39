@@ -3,6 +3,12 @@ version 8
 __lua__
 function _init()
  menu = true
+ sources = {'slug','hamster','chicken','r.master'}
+ machines = {}
+ for i=1,4,1 do
+  machines[i] = def_powersource()
+ end
+ tick = 0
 end
 
 function _draw()
@@ -21,6 +27,7 @@ function _update()
  else
   game_logic()
  end
+ tick = tick + 1
 end
 
 -- menu stuff
@@ -59,8 +66,27 @@ function game_logic()
  // do things here!
 end
 
+-- game stuff
 
 
+function def_powersource()
+ source = {}
+ source.name = 2
+ source.percent = 0.5
+ source.tired = 0.5
+ source.hunger = 0.5
+ return source
+end
+
+function game_logic()
+  --
+end
+
+function draw_screen()
+  cls()
+  print tick
+
+end
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
