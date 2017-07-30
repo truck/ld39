@@ -6,7 +6,7 @@ function _init()
  sources = {'slug','machine','chicken','r.master'}
  machines = {}
  for i=1,4,1 do
-  machines[i] = def_powersource()
+  machines[i] = def_powersource(i)
  end
  tick = 0
 end
@@ -59,17 +59,25 @@ function draw_screen()
 end
 
 function draw_machine(m)
- l = sources[m.name] .. ' '.. statbit('p',m.percent) .. statbit('f',m.tired) .. statbit('h',m.hunger)
- print(l)
+ x1 = {0,64,0,64}
+ y1 = {64,64,96,96}
+ x=x1[m.num]
+ y=y1[m.num]
+ print(sources[m.name],x,y,15)
+ spr(pmeter(m.percent),x,y+8,1,1)
+ spr(pmeter(m.tired),x+9,y+8,1,1)
+ spr(pmeter(m.hunger),x+18,y+8,1,1)  
+
 end
 
-function statbit(label,percent)
-  return (label .. ':' .. tostring(percent*100) .. '% ' )
+function pmeter(p)
+  return flr((p*100)/25)
 end
 -- game stuff
 
-function def_powersource()
+function def_powersource(n)
  source = {}
+ source.num = n
  source.name = 2
  source.percent = 0.5
  source.tired = 0.5
