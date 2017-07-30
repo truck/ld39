@@ -58,10 +58,14 @@ function draw_screen()
  foreach(machines,draw_machine)
 end
 
-function draw_machine(machine)
- print "look at her butt!"
+function draw_machine(m)
+ l = sources[m.name] .. ' '.. statbit('p',m.percent) .. statbit('f',m.tired) .. statbit('h',m.hunger)
+ print(l)
 end
 
+function statbit(label,percent)
+  return (label .. ':' .. tostring(percent*100) .. '% ' )
+end
 -- game stuff
 
 function def_powersource()
