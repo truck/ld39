@@ -3,7 +3,7 @@ version 8
 __lua__
 function _init()
  menu = true
- sources = {'slug','hamster','chicken','r.master'}
+ sources = {'slug','machine','chicken','r.master'}
  machines = {}
  for i=1,4,1 do
   machines[i] = def_powersource()
@@ -12,12 +12,12 @@ function _init()
 end
 
 function _draw()
+ cls()
  if menu then
   draw_menu()
  else
   cls()
   draw_screen()
-  foreach(hamster,draw_hamster)
  end
 end
 
@@ -32,7 +32,6 @@ end
 
 -- menu stuff
 function draw_menu()
- cls()
  color(8)
  print "the internet vs ludum dare"
  color(9)
@@ -56,18 +55,14 @@ end
 
 function draw_screen()
  print "omg becky"
+ foreach(machines,draw_machine)
 end
 
-function draw_hamster(hamster)
+function draw_machine(machine)
  print "look at her butt!"
 end
 
-function game_logic()
- // do things here!
-end
-
 -- game stuff
-
 
 function def_powersource()
  source = {}
@@ -80,12 +75,6 @@ end
 
 function game_logic()
   --
-end
-
-function draw_screen()
-  cls()
-  print tick
-
 end
 
 __gfx__
