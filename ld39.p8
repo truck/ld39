@@ -10,9 +10,11 @@ function _init()
   machines[i] = def_powersource(i)
  end
  x1 = {16,80,16,80}
- y1 = {64,64,112,112}
+ y1 = {72,72,112,112}
  tick = 0
  pov = def_pov()
+ moneez = 100
+ icanhaz = 1
 end
 
 function _draw()
@@ -97,10 +99,44 @@ end
 
 function draw_status()
   rectfill(1,1,127,48,5)
+  for i=31,48,2 do
+   line(1,i,125,i,1)
+   line(1,i+1,125,i+1,0)
+  end
   rect(0,0,126,47,6)
   spr(64,0,0,16,4)
-  isup('servers are ',false, 4, 32,1)
-  isup('irc is ',true,80,32,2)
+  clock()
+  isup('servers are ',false, 2, 32,1)
+  isup('irc is ',true,74,32,1)
+  isup('people are ',false, 2, 40,2)
+  print(computers[icanhaz],75,41,2)
+  print(computers[icanhaz],74,40,7)
+  print("\x92",101,7,8)
+  print("\x92",100,8,10)
+  print(moneez,111,7,8)
+  print(moneez,110,8,10)
+end
+
+function clock()
+  local t1 = flr(tick/20)
+  local m1 = flr(t1/60)
+  local s1 = t1 % 60
+  local s2 = s1 % 10
+  s1 = flr((s1-s2)/10)
+
+  print(t1,0,0,0)
+  print(m1,20,0,0)
+  print(s1,0,8,0)
+  print(s2,8,8,0)
+
+  local s1 = t1 - 60*m1
+  local s2 = s1 % 10
+  s1 = flr(s1 / 10)
+  spr(128,44,2,1,3)
+  spr(128+(m1),44+8,2,1,3 )
+  spr(138+animn(2,15),58,2,1,3)
+  spr(128+s1,48+8+8,2,1,3 )
+  spr(128+s2,48+8+16,2,1,3 )
 end
 
 function isup(msg, up, x,y,gr)
