@@ -14,9 +14,13 @@ function _init()
  tick = 0
  pov = def_pov()
  moneez = 100
- icanhaz = 5
+ icanhaz = 1
+ hps = 1
  sup = true
  happy = false
+ tp = 0
+ pp = 0
+ np = 0
 end
 
 function _draw()
@@ -121,14 +125,10 @@ function draw_status()
   dprint("\x92",100,8,8,10)
   dprint(moneez,110,8,8,10)
 
-  local np = icanhaz * 80
-  local tp = 0
-  for i=1,4,1 do
-   tp += 100*machines[i].percent
-  end
-  tp = flr(tp)
-  dprint("n:".. np, 55,50,0,6)
-  dprint("t:".. tp, 55,56,0,6)
+  dprint("h:".. flr(hps), 56,50,0,6)
+  dprint("n:".. np, 56,56,0,6)
+  dprint("t:".. tp, 56,62,0,6)
+  dprint("p:".. flr(pp), 56,68,0,6)
 end
 
 function dprint(s,x,y,c1,c2)
@@ -189,8 +189,8 @@ end
 function def_powersource(n)
  source = {}
  source.num = n
- source.name = 5
- source.percent = 0.5
+ source.name = 1
+ source.percent = 1.0
  source.tired = 1.0
  source.hunger = 1.0
  return source
@@ -239,8 +239,9 @@ function checkpovflag(x,y,flag)
 end
 
 function handle_tick(m)
-  m.percent -= 0.0005 * icanhaz
-  m.percent += .001 * m.name * m.tired
+
+--  m.percent -= np / 100
+--  m.percent += .001 * m.name * m.tired
   if (m.percent < 0.3) then
     m.percent = 0.3
   else if (m.percent > 1.0) then
@@ -258,6 +259,15 @@ function handle_tick(m)
 end
 
 function game_logic()
+  tp = 0
+  pp = 0
+  hps += (tick%10)/25
+  np = flr(hps / icanhaz) -- icanhaz * 80
+  for i=1,4,1 do
+   tp += 25 * machines[i].percent
+   pp += icanhaz*5*machines[i].tired
+  end
+
   foreach(machines,handle_tick)
   movpov()
 end
