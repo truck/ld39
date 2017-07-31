@@ -248,13 +248,20 @@ function handle_tick(m)
     m.percent = 1.0
     end
   end
-  m.tired -= 0.00075
+  m.tired += (m.hunger / 10 )
+
   if (m.tired < 0.3) then
     m.tired = 0.3
+    else if (m.tired > 1.0) then
+      m.tired = 1.0
+    end
   end
   m.hunger -= 0.001
   if (m.hunger < 0.3) then
     m.hunger = 0.3
+    else if (m.hunger > 1.0) then
+      m.hunger = 1.0
+    end
   end
 end
 
