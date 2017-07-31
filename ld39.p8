@@ -180,10 +180,10 @@ end
 function def_powersource(n)
  source = {}
  source.num = n
- source.name = 1
- source.percent = 1.0
- source.tired = 0.5
- source.hunger = 0.5
+ source.name = 5
+ source.percent = 0.5
+ source.tired = 1.0
+ source.hunger = 1.0
  return source
 end
 
@@ -231,8 +231,20 @@ end
 
 function handle_tick(m)
   m.percent -= 0.0005
+  m.percent += .001 * m.name * m.tired
   if (m.percent < 0.3) then
     m.percent = 0.3
+  else if (m.percent > 1.0) then
+    m.percent = 1.0
+    end
+  end
+  m.tired -= 0.00075
+  if (m.tired < 0.3) then
+    m.tired = 0.3
+  end
+  m.hunger -= 0.001
+  if (m.hunger < 0.3) then
+    m.hunger = 0.3
   end
 end
 
