@@ -17,7 +17,9 @@ function _draw()
  cls(1)
  if menu then
   draw_menu()
-  print(lookatherbut(),64,110)
+  local x = joydir()
+  print(x[1],34,110)
+  print(x[2],74,110)  
  else
   draw_screen()
  end
@@ -116,17 +118,14 @@ function def_pov()
  return pov
 end
 
-function lookatherbut()
-  local r = 0
-  for i=0,5,1 do
-   r += (i+1) * chkbut(i)
-  end
-  r -= 1
-  return r
+function joydir()
+  local r = ((1 - intbool(btn(0))) + intbool(btn(1)) ) - 1
+  local s = ((1 - intbool(btn(2))) + intbool(btn(3)) ) - 1
+  return {r,s}
 end
 
-function chkbut(i)
-  if (btn(i)) then return 1 else return 0 end
+function intbool(i)
+  if (i) then return 1 else return 0 end
 end
 
 function game_logic()
