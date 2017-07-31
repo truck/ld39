@@ -41,9 +41,9 @@ function _draw()
     tick += 1
   else
     if (buymenu) then
-      momenu()
-    else
       action_menu()
+    else
+      momenu()
     end
   end
  end
@@ -316,14 +316,13 @@ function handle_tick(m)
       m.hunger = 1.0
     end
   end
---  printh(m.tired .. ',' .. m.hunger)
 end
 
 function game_logic()
   tp = 0
   pp = 0
   hps += (tick%10)/25
-  np = flr(hps / icanhaz) -- icanhaz * 80
+  np = flr(hps / icanhaz)
   for i=1,4,1 do
    tp += 25 * machines[i].percent
    pp += icanhaz*5*machines[i].tired
