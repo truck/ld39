@@ -28,6 +28,7 @@ function _init()
  pp = 0
  np = 0
  mi = 1
+-- this has too many menu state flags and i should build a menuing system
 end
 
 function _draw()
@@ -39,7 +40,11 @@ function _draw()
     draw_screen()
     tick += 1
   else
-   action_menu()
+    if (buymenu) then
+      momenu()
+    else
+      action_menu()
+    end
   end
  end
 end
@@ -367,36 +372,59 @@ function do_buy_thing()
 end
 
 function buy_food()
+ -- do something
+end
+
+function buy_critter()
+ -- do something
+end
+
+function buy_server()
+ -- do something
+end
+
+function momenu()
+  if (mi == 1) then draw_buy_food() end
+  if (mi == 2) then draw_buy_critter() end
+  if (mi == 3) then draw_buy_server() end
+  if (mi == 4) then draw_tweet() end
+end
+
+function draw_buy_food()
   for i=1,#sources,1 do
     dprint(sources[i] .. " food .. " .. sfood[i],24,i*8+48,c1,c2)
   end
 end
 
-function buy_food()
+function draw_buy_critter()
   for i=1,#sources,1 do
-    dprint(sources[i] .. " food .. " .. sfood[i],24,i*8+48,c1,c2)
+    dprint(sources[i] .. " critter .. " .. sfood[i],24,i*8+48,c1,c2)
   end
 end
 
-function buy_food()
-  for i=1,#sources,1 do
-    dprint(sources[i] .. " food .. " .. sfood[i],24,i*8+48,c1,c2)
+function draw_buy_server()
+  for i=1,#computers,1 do
+    dprint(computers[i] .. " server .. " .. sfood[i],24,i*8+48,c1,c2)
   end
 end
 
 function tweet()
-  c64('tweet')
-  dprint("tweeting...",24,56,3,10)
-  dprintc("[ludum_dar3]",64,0,2)
-  dprint("the servers are melting plz moneez",24,72,5,11)
-  dprintc("a winnar is you",88,0,8)
-  dprintc("you get 500 moneez",96,2,10)
   if (btnp(4)) then
     buymenu = true
     pov.x = 64
     pov.room = true
     moneez += 500
   end
+end
+
+function draw_tweet()
+  c64('tweet')
+  dprint("tweeting...",24,56,3,10)
+  dprintc("[ludum_dar3]",64,0,2)
+  dprint("the servers are melting",8,72,5,11)
+  dprint(" ... plz moneez",8,80,5,11)
+  dprintc("a winnar is you",88,0,8)
+  dprintc("you get 500 moneez",96,2,10)
 end
 
 
