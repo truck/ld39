@@ -17,6 +17,7 @@ function _draw()
  cls(1)
  if menu then
   draw_menu()
+  print(lookatherbut(),64,110)
  else
   draw_screen()
  end
@@ -115,7 +116,18 @@ function def_pov()
  return pov
 end
 
+function lookatherbut()
+  local r = 0
+  for i=0,5,1 do
+   r += (i+1) * chkbut(i)
+  end
+  r -= 1
+  return r
+end
 
+function chkbut(i)
+  if (btn(i)) then return 1 else return 0 end
+end
 
 function game_logic()
   --
