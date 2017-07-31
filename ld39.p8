@@ -55,7 +55,6 @@ end
 -- draw stuff
 
 function draw_screen()
- print "omg becky"
  foreach(machines,draw_machine)
  draw_pov()
 end
@@ -71,6 +70,12 @@ function draw_machine(m)
  spr(pmeter(m.percent),x,y+6,1,1)
  spr(pmeter(m.tired),x+15,y+6,1,1)
  spr(pmeter(m.hunger),x+30,y+6,1,1)
+ t = animn(2,10)
+ print(animn(3,5),50,50,7)
+ spr(7+t,10,20)
+ spr(23+t,20,20)
+ spr(39+t,40,20)
+ spr(55+t,60,20)
 end
 
 function pmeter(p)
@@ -82,6 +87,13 @@ function draw_pov()
   print(pov.y,64,8)
   spr(5,pov.x,pov.y,2,2,pov.facing)
 end
+
+function animn(n,d)
+  local x = flr(tick % (n*d))
+  x = flr(x/d)
+  return x
+end
+
 -- game stuff
 
 function def_powersource(n)
@@ -102,6 +114,8 @@ function def_pov()
  pov.holding = 0
  return pov
 end
+
+
 
 function game_logic()
   --
