@@ -3,12 +3,13 @@ version 8
 __lua__
 function _init()
  menu = true
- sources = {'slug','machine','chicken','r.master'}
+ sources = {'slug','hamster','chicken','r.master','c= 64'}
  machines = {}
  for i=1,4,1 do
   machines[i] = def_powersource(i)
  end
  tick = 0
+ pov = def_pov()
 end
 
 function _draw()
@@ -16,7 +17,7 @@ function _draw()
  if menu then
   draw_menu()
  else
-  cls()
+  cls(6)
   draw_screen()
  end
 end
@@ -56,6 +57,7 @@ end
 function draw_screen()
  print "omg becky"
  foreach(machines,draw_machine)
+ draw_pov()
 end
 
 function draw_machine(m)
@@ -66,12 +68,17 @@ function draw_machine(m)
  print(sources[m.name],x,y,15)
  spr(pmeter(m.percent),x,y+8,1,1)
  spr(pmeter(m.tired),x+9,y+8,1,1)
- spr(pmeter(m.hunger),x+18,y+8,1,1)  
-
+ spr(pmeter(m.hunger),x+18,y+8,1,1)
 end
 
 function pmeter(p)
   return flr((p*100)/25)
+end
+
+function draw_pov()
+  print(pov.x,0,8)
+  print(pov.y,64,8)
+  spr(5,pov.x,pov.y,2,2,pov.facing)
 end
 -- game stuff
 
@@ -83,6 +90,15 @@ function def_powersource(n)
  source.tired = 0.5
  source.hunger = 0.5
  return source
+end
+
+function def_pov()
+ pov = {}
+ pov.x = 36
+ pov.y = 80
+ pov.facing = false
+ pov.holding = 0
+ return pov
 end
 
 function game_logic()
