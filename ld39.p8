@@ -9,7 +9,7 @@ function _init()
  for i=1,4,1 do
   machines[i] = def_powersource(i)
  end
- x1 = {16,80,16,80}
+ x1 = {10,80,10,80}
  y1 = {72,72,112,112}
  tick = 0
  pov = def_pov()
