@@ -3,8 +3,12 @@ version 10
 __lua__
 function _init()
  menu = true
+ buymenu = true
  sources = {'worm','hamster','chicken','ferret','r.master'}
+ scost = {1,50,100,250,500}
+ sfood = {1,5,10,25,50}
  computers = {'pc server','quadcore','rpi cluster','pc cluster','c= 64 cluster'}
+ ccost = {1,400,800,1200,1600}
  machines = {}
  for i=1,4,1 do
   machines[i] = def_powersource(i)
@@ -43,8 +47,15 @@ end
 function _update()
  if menu then
   update_menu()
- else
-  game_logic()
+ else if (pov.room) then
+    game_logic()
+  else
+    if (buymenu) then
+      buy_logic()
+    else
+      do_buy_thing()
+    end
+  end
  end
 end
 
@@ -330,10 +341,64 @@ function game_logic()
    if (madtime < 1) then madtime = 0 end
   end
 
-
   foreach(machines,handle_tick)
   movpov()
 end
+
+function buy_logic()
+ if (btn(4) ) then
+  buymenu = false
+ else
+    if (btnp(2)) then
+      mi -= 1
+      if (mi < 1) then mi = 1 end
+    elseif (btnp(3)) then
+      mi += 1
+      if (mi > 4) then mi = 4 end
+    end
+ end
+end
+
+function do_buy_thing()
+  if (mi == 1) then buy_food() end
+  if (mi == 2) then buy_critter() end
+  if (mi == 3) then buy_server() end
+  if (mi == 4) then tweet() end
+end
+
+function buy_food()
+  for i=1,#sources,1 do
+    dprint(sources[i] .. " food .. " .. sfood[i],24,i*8+48,c1,c2)
+  end
+end
+
+function buy_food()
+  for i=1,#sources,1 do
+    dprint(sources[i] .. " food .. " .. sfood[i],24,i*8+48,c1,c2)
+  end
+end
+
+function buy_food()
+  for i=1,#sources,1 do
+    dprint(sources[i] .. " food .. " .. sfood[i],24,i*8+48,c1,c2)
+  end
+end
+
+function tweet()
+  c64('tweet')
+  dprint("tweeting...",24,56,3,10)
+  dprintc("[ludum_dar3]",64,0,2)
+  dprint("the servers are melting plz moneez",24,72,5,11)
+  dprintc("a winnar is you",88,0,8)
+  dprintc("you get 500 moneez",96,2,10)
+  if (btnp(4)) then
+    buymenu = true
+    pov.x = 64
+    pov.room = true
+    moneez += 500
+  end
+end
+
 
 __gfx__
 0000000000000000000000000000000000000000000000080000000000000000006660000000000000066600000cc000000cc000000cc000000cc00000000000
