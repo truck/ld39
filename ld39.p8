@@ -17,7 +17,9 @@ function _init()
  icanhaz = 1
  hps = 1
  sup = true
- happy = false
+ downtime = 0
+ happy = true
+ madtime = 0
  tp = 0
  pp = 0
  np = 0
@@ -263,7 +265,7 @@ function handle_tick(m)
       m.hunger = 1.0
     end
   end
-  printh(m.tired .. ',' .. m.hunger)
+--  printh(m.tired .. ',' .. m.hunger)
 end
 
 function game_logic()
@@ -276,6 +278,23 @@ function game_logic()
    pp += icanhaz*5*machines[i].tired
   end
   tp = tp - 29
+
+  if (tp < hps) then
+    sup = false
+    downtime = downtime + 1
+  else
+    sup = true
+    downtime = downtime - 1
+    if (downtime < 1) then downtime = 1 end
+  end
+  if (downtime > 100) then
+    happy = false
+    madtime = madtime + 1
+  else
+   madtime = madtime - 1
+   if (madtime < 1) then madtime = 0 end
+  end
+
 
   foreach(machines,handle_tick)
   movpov()
