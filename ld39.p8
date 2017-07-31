@@ -127,7 +127,7 @@ function draw_status()
 
   dprint("h:".. flr(hps), 56,50,0,6)
   dprint("n:".. np, 56,56,0,6)
-  dprint("t:".. tp, 56,62,0,6)
+  dprint("t:".. flr(tp), 56,62,0,6)
   dprint("p:".. flr(pp), 56,68,0,6)
 end
 
@@ -240,8 +240,8 @@ end
 
 function handle_tick(m)
 
---  m.percent -= np / 100
---  m.percent += .001 * m.name * m.tired
+  m.percent -= (np / 400)
+  m.percent += ((icanhaz * 5 * m.tired)/10)
   if (m.percent < 0.3) then
     m.percent = 0.3
   else if (m.percent > 1.0) then
@@ -267,6 +267,7 @@ function game_logic()
    tp += 25 * machines[i].percent
    pp += icanhaz*5*machines[i].tired
   end
+  tp = tp - 29
 
   foreach(machines,handle_tick)
   movpov()
