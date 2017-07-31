@@ -131,11 +131,6 @@ function clock()
   local s2 = s1 % 10
   s1 = flr((s1-s2)/10)
 
-  print(t1,0,0,0)
-  print(m1,20,0,0)
-  print(s1,0,8,0)
-  print(s2,8,8,0)
-
   local s1 = t1 - 60*m1
   local s2 = s1 % 10
   s1 = flr(s1 / 10)
