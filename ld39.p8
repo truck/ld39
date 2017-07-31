@@ -1,5 +1,5 @@
 pico-8 cartridge // http://www.pico-8.com
-version 8
+version 10
 __lua__
 function _init()
  menu = true
@@ -23,6 +23,7 @@ function _init()
  tp = 0
  pp = 0
  np = 0
+ mi = 1
 end
 
 function _draw()
@@ -30,7 +31,12 @@ function _draw()
  if menu then
   draw_menu()
  else
-  draw_screen()
+  if (pov.room) then
+    draw_screen()
+    tick += 1
+  else
+   action_menu()
+  end
  end
 end
 
@@ -39,7 +45,6 @@ function _update()
   update_menu()
  else
   game_logic()
-  tick = tick + 1
  end
 end
 
@@ -64,7 +69,33 @@ function update_menu()
  end
 end
 
+-- action menu stuff
+function action_menu()
+  c64("do")
+  local c1=0
+  local c2=0
+  local m = {"buy food","upgrade critter","upgrade server","tweet for moneez"}
+  for i=1,4,1 do
+    if (i == mi) then
+      c1 = 2
+      c2 = 10
+    else
+      c1 = 5
+      c2 = 6
+    end
+    dprint(m[i],24,i*8+48,c1,c2)
+  end
+end
+
 -- draw stuff
+
+function c64(s)
+  cls(13)
+  rectfill(8,8,120,120,1)
+  dprintc("*** commodore basic v2 ***",16,0,13)
+  dprintc("whatcha gonna "..s,32,0,13)
+  dprintc("-=-=-=-=-=-",40,0,13)
+end
 
 function draw_screen()
  draw_status()
@@ -134,6 +165,12 @@ function draw_status()
 end
 
 function dprint(s,x,y,c1,c2)
+  print(s,x+1,y+1,c1)
+  print(s,x,y,c2)
+end
+
+function dprintc(s,y,c1,c2)
+  x = 64 - (#s * 2)
   print(s,x+1,y+1,c1)
   print(s,x,y,c2)
 end
@@ -227,8 +264,6 @@ function movpov()
     if (checkpovflag(pov.x,pov.y,0)) then
       pov.room = false
     end
-  else
-    bork()
   end
 end
 
