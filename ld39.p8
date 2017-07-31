@@ -248,7 +248,7 @@ function handle_tick(m)
     m.percent = 1.0
     end
   end
-  m.tired += (m.hunger / 10 )
+  m.tired += (m.hunger / 100 ) - 0.005
 
   if (m.tired < 0.3) then
     m.tired = 0.3
@@ -263,6 +263,7 @@ function handle_tick(m)
       m.hunger = 1.0
     end
   end
+  printh(m.tired .. ',' .. m.hunger)
 end
 
 function game_logic()
