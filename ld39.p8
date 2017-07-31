@@ -225,7 +225,23 @@ function checkpovflag(x,y,flag)
   return fget(s,flag)
 end
 
+function handle_tick(m)
+  m.hunger -= 0.01
+  m.tired -= 0.0025
+  m.percent -= 0.005
+  if (m.percent < 0.01) then
+    m.percent = 0.01
+  end
+  if (m.tired < 0.01) then
+    m.tired = 0.01
+  end
+  if (m.hunger < 0.01) then
+    m.hunger = 0.01
+  end
+end
+
 function game_logic()
+  foreach(machines,handle_tick)
   movpov()
 end
 
