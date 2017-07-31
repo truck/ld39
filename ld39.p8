@@ -3,12 +3,14 @@ version 8
 __lua__
 function _init()
  menu = true
- sources = {'slug','hamster','chicken','r.master','c= 64'}
+ sources = {'slug','hamster','chicken','ferret','r.master'}
  computers = {'pc server','quadcore','rpi cluster','pc cluster','c= 64 cluster'}
  machines = {}
  for i=1,4,1 do
   machines[i] = def_powersource(i)
  end
+ x1 = {16,80,16,80}
+ y1 = {64,64,112,112} 
  tick = 0
  pov = def_pov()
 end
@@ -60,22 +62,18 @@ function draw_screen()
 end
 
 function draw_machine(m)
- x1 = {16,80,16,80}
- y1 = {64,64,112,112}
- x=x1[m.num]
- y=y1[m.num]
+ local t = animn(4,3)
+ local x=x1[m.num]
+ local y=y1[m.num]
+ local a = {7,23,39,55}
  rect(x-2,y-2,x+38,y+12,6)
  rectfill(x-1,y-1,x+39,y+13,13) 
  print(sources[m.name],x,y,15)
  spr(pmeter(m.percent),x,y+6,1,1)
- spr(pmeter(m.tired),x+15,y+6,1,1)
- spr(pmeter(m.hunger),x+30,y+6,1,1)
- t = animn(4,10)
- print(animn(3,5),50,50,7)
- spr(7+t,10,20)
- spr(23+t,20,20)
- spr(39+t,40,20)
- spr(55+t,60,20)
+ local b = pmeter(m.tired)
+ spr(a[b]+t,x+15,y+6,1,1)
+ spr(10+pmeter(m.hunger),x+30,y+6,1,1)
+
 end
 
 function pmeter(p)
@@ -83,8 +81,6 @@ function pmeter(p)
 end
 
 function draw_pov()
-  print(pov.x,0,8)
-  print(pov.y,64,8)
   spr(5,pov.x,pov.y,2,2,pov.facing)
 end
 
