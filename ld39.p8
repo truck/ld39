@@ -15,6 +15,8 @@ function _init()
  pov = def_pov()
  moneez = 100
  icanhaz = 1
+ sup = true
+ happy = true
 end
 
 function _draw()
@@ -90,7 +92,7 @@ function draw_machine(m)
 end
 
 function pmeter(p)
-  return flr((p*100)/25)
+  return flr((p*110)/25)
 end
 
 function draw_pov()
@@ -112,9 +114,9 @@ function draw_status()
   rect(0,0,126,47,6)
   spr(64,0,0,16,4)
   clock()
-  isup('servers are ',false, 2, 32,1)
+  isup('servers are ',sup, 2, 32,1)
   isup('irc is ',true,74,32,1)
-  isup('people are ',false, 2, 40,2)
+  isup('people are ',happy, 2, 40,2)
   print(computers[icanhaz],75,41,2)
   print(computers[icanhaz],74,40,7)
   print("\x92",101,7,8)
@@ -177,7 +179,7 @@ function def_powersource(n)
  source = {}
  source.num = n
  source.name = 1
- source.percent = 0.5
+ source.percent = 1.0
  source.tired = 0.5
  source.hunger = 0.5
  return source
@@ -226,17 +228,9 @@ function checkpovflag(x,y,flag)
 end
 
 function handle_tick(m)
-  m.hunger -= 0.01
-  m.tired -= 0.0025
-  m.percent -= 0.005
-  if (m.percent < 0.01) then
-    m.percent = 0.01
-  end
-  if (m.tired < 0.01) then
-    m.tired = 0.01
-  end
-  if (m.hunger < 0.01) then
-    m.hunger = 0.01
+  m.percent -= 0.0005
+  if (m.percent < 0.3) then
+    m.percent = 0.3
   end
 end
 
