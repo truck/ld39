@@ -117,12 +117,14 @@ function draw_status()
   isup('servers are ',sup, 2, 32,1)
   isup('irc is ',true,74,32,1)
   isup('people are ',happy, 2, 40,2)
-  print(computers[icanhaz],75,41,2)
-  print(computers[icanhaz],74,40,7)
-  print("\x92",101,7,8)
-  print("\x92",100,8,10)
-  print(moneez,111,7,8)
-  print(moneez,110,8,10)
+  dprint(computers[icanhaz],74,40,2,7)
+  dprint("\x92",100,8,8,10)
+  dprint(moneez,110,8,8,10)
+end
+
+function dprint(s,x,y,c1,c2)
+  print(s,x+1,y+1,c1)
+  print(s,x,y,c2)
 end
 
 function clock()
@@ -167,9 +169,9 @@ function isup(msg, up, x,y,gr)
   print(msg,x,y,7)
   txt = { { 'up!','down!' }, {'happy!','angry!'} }
   if (up) then
-    print(txt[gr][1],#msg*4+x,y,3)
+    dprint(txt[gr][1],#msg*4+x,y,0,3)
   else
-    print(txt[gr][2],#msg*4+x,y,8)
+    dprint(txt[gr][2],#msg*4+x,y,2,8)
   end
 end
 
