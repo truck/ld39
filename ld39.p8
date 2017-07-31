@@ -17,9 +17,6 @@ function _draw()
  cls(1)
  if menu then
   draw_menu()
-  local x = joydir()
-  print(x[1],34,110)
-  print(x[2],74,110)  
  else
   draw_screen()
  end
@@ -30,8 +27,8 @@ function _update()
   update_menu()
  else
   game_logic()
+  tick = tick + 1  
  end
- tick = tick + 1
 end
 
 -- menu stuff
@@ -128,8 +125,15 @@ function intbool(i)
   if (i) then return 1 else return 0 end
 end
 
+function movpov()
+  local x = joydir()
+  pov.x += x[1]
+  pov.y += x[2]
+  pov.facing = x[1] == 1
+end
+
 function game_logic()
-  --
+  movpov()
 end
 
 __gfx__
