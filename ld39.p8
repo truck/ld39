@@ -120,6 +120,15 @@ function draw_status()
   dprint(computers[icanhaz],74,40,2,7)
   dprint("\x92",100,8,8,10)
   dprint(moneez,110,8,8,10)
+
+  local np = icanhaz * 80
+  local tp = 0
+  for i=1,4,1 do
+   tp += 100*machines[i].percent
+  end
+  tp = flr(tp)
+  dprint("n:".. np, 55,50,0,6)
+  dprint("t:".. tp, 55,56,0,6)
 end
 
 function dprint(s,x,y,c1,c2)
