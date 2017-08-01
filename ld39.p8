@@ -377,7 +377,7 @@ function buy_logic2(fx,ul)
       if (mi2 < 1) then mi2 = 1 end
     elseif (btnp(3)) then
       mi2 += 1
-      if (mi2 > ul) then mi2 = 4 end
+      if (mi2 > ul) then mi2 = ul end
     end
  end
 end
@@ -385,7 +385,7 @@ end
 function do_buy_thing()
   if (mi == 1) then buy_logic2(buy_food,#sfood) end
   if (mi == 2) then buy_logic2(buy_critter,#scost) end
-  if (mi == 3) then buy_logic2(m_buy_server,#computers) end
+  if (mi == 3) then buy_logic2(buy_server,#computers) end
   if (mi == 4) then tweet() end
 end
 
@@ -397,11 +397,13 @@ function buy_food()
 end
 
 function buy_critter()
- -- do something
+  moneez -= scost[mi2]
+  postbuy_reset()
 end
 
 function buy_server()
- -- do something
+  moneez -= ccost[mi2]
+  postbuy_reset()
 end
 
 function momenu()
@@ -411,11 +413,11 @@ function momenu()
   if (mi == 4) then draw_tweet() end
 end
 
-function draw_buy_food()
+function draw_buy_generic(what,s,cost,x)
   c64("buy")
   local c1 = 1
   local c2 = 1
-  for i=1,#sources,1 do
+  for i=1,#what,1 do
     if (i == mi2) then
       c1 = 2
       c2 = 10
@@ -423,20 +425,20 @@ function draw_buy_food()
       c1 = 5
       c2 = 6
     end
-    dprint(sources[i] .. " food .. " .. sfood[i],24,i*8+48,c1,c2)
+    dprint(what[i] .. s .. cost[i],x,i*8+48,c1,c2)
   end
+end
+
+function draw_buy_food()
+  draw_buy_generic(sources," food ..",sfood,16)
 end
 
 function draw_buy_critter()
-  for i=1,#sources,1 do
-    dprint(sources[i] .. " critter .. " .. sfood[i],24,i*8+48,c1,c2)
-  end
+  draw_buy_generic(sources," ..", scost, 16)
 end
 
 function draw_buy_server()
-  for i=1,#computers,1 do
-    dprint(computers[i] .. " server .. " .. sfood[i],24,i*8+48,c1,c2)
-  end
+  draw_buy_generic(computers," upgrade ..",ccost,8)
 end
 
 function tweet()
