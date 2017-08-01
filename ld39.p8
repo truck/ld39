@@ -384,8 +384,8 @@ end
 
 function do_buy_thing()
   if (mi == 1) then buy_logic2(buy_food,#sfood) end
-  if (mi == 2) then m_buy_critter() end
-  if (mi == 3) then m_buy_server() end
+  if (mi == 2) then buy_logic2(buy_critter,#scost) end
+  if (mi == 3) then buy_logic2(m_buy_server,#computers) end
   if (mi == 4) then tweet() end
 end
 
