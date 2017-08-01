@@ -151,6 +151,9 @@ end
 
 function draw_pov()
   spr(5,pov.x,pov.y,2,2,pov.facing)
+  if (pov.holding) then
+    spr(37,pov.x+6,pov.y+8)
+  end
 end
 
 function animn(n,d)
@@ -257,7 +260,8 @@ function def_pov()
  pov.x = 36
  pov.y = 80
  pov.facing = false
- pov.holding = 0
+ pov.holding = false
+ pov.wh = 0
  pov.room = true
  return pov
 end
@@ -386,8 +390,9 @@ function do_buy_thing()
 end
 
 function buy_food()
-  moneez -= sfood[mi]
-  -- give pov a food
+  moneez -= sfood[mi2]
+  pov.holding = true
+  pov.what = mi2
   postbuy_reset()
 end
 
