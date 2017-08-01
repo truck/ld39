@@ -286,8 +286,13 @@ function intbool(i)
   if (i) then return 1 else return 0 end
 end
 
-function movpov()
+function move_pov()
   if(pov.room) then
+    if (btnp(4)) then
+      if (pov.holding) then
+        handle_food()
+      end
+    end
     local x = joydir()
     pov.x += x[1]
     pov.y += x[2]
@@ -295,6 +300,32 @@ function movpov()
     if (checkpovflag(pov.x,pov.y,0)) then
       pov.room = false
     end
+  end
+end
+
+function handle_food()
+  local ok = 0
+  local lx = 0
+  local rx = 0
+  local ly = 0
+  local ry = 0
+
+  for i=1,4,1 do
+    lx = x1[i] - 20
+    rx = x1[i] + 20
+    ly = y1[i] - 10
+    ry = y1[i] + 20
+    if (pov.x > lx and pov.x < rx) then
+      if (pov.y > ly and pov.y < ry) then
+        ok = i
+      end
+    end
+  end
+  if (ok > 1) then
+    pov.holding = false
+-- not at all right, itś time to submit
+    machines[ok].hunger = 1
+    pov.what = 0
   end
 end
 
@@ -361,7 +392,7 @@ function game_logic()
   end
 
   foreach(machines,handle_tick)
-  movpov()
+  move_pov()
 end
 
 function buy_logic()
