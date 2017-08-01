@@ -29,6 +29,7 @@ function _init()
  np = 0
  mi = 1
  mi2 = 1
+ em = nil
 -- this has too many menu state flags and i should build a menuing system
 end
 
@@ -112,6 +113,9 @@ function c64(s)
   dprintc("*** commodore basic v2 ***",16,0,13)
   dprintc("whatcha gonna "..s,32,0,13)
   dprintc("-=-=-=-=-=-",40,0,13)
+  if (em ~= nil) then
+    bzztno(em)
+  end
 end
 
 function draw_screen()
@@ -244,9 +248,9 @@ function isup(msg, up, x,y,gr)
 end
 
 function bzztno(msg)
-  circfill(64,64,60,8)
-  dprintc("bzzzt no",56,11,12)
-  dprintc(msg,72,10,0)
+  rectfill(8,102,120,120,8)
+  dprintc("bzzzt no",104,11,12)
+  dprintc(msg,112,10,0)
 end
 
 -- game stuff
@@ -402,7 +406,7 @@ function buy_food()
     pov.what = mi2
     postbuy_reset()
   else
-   bzztno("not enough moneez")
+    em = "not enough moneez"
   end
 end
 
@@ -411,7 +415,7 @@ function buy_critter()
     moneez -= scost[mi2]
     postbuy_reset()
   else
-    bzztno("not enough moneez")
+    em = "not enough moneez"
   end
 end
 
@@ -420,7 +424,7 @@ function buy_server()
     moneez -= ccost[mi2]
     postbuy_reset()
   else
-    bzztno("not enough moneez")
+    em = "not enough moneez"
   end
 end
 
@@ -472,6 +476,7 @@ function postbuy_reset()
   pov.room = true
   m2 = 1
   mi = 1
+  em = nil
 end
 
 function draw_tweet()
