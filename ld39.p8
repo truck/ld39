@@ -175,8 +175,8 @@ function draw_status()
   isup('irc is ',true,74,32,1)
   isup('people are ',happy, 2, 40,2)
   dprint(computers[icanhaz],74,40,2,7)
-  dprint("\x92",100,8,8,10)
-  dprint(moneez,110,8,8,10)
+  dprint("\x92",95,8,8,10)
+  dprint(moneez,105,8,8,10)
 
   dprint("h:".. flr(hps), 56,50,0,6)
   dprint("n:".. np, 56,56,0,6)
@@ -241,6 +241,12 @@ function isup(msg, up, x,y,gr)
   else
     dprint(txt[gr][2],#msg*4+x,y,2,8)
   end
+end
+
+function bzztno(msg)
+  circfill(64,64,60,8)
+  dprintc("bzzzt no",56,11,12)
+  dprintc(msg,72,10,0)
 end
 
 -- game stuff
@@ -390,20 +396,32 @@ function do_buy_thing()
 end
 
 function buy_food()
-  moneez -= sfood[mi2]
-  pov.holding = true
-  pov.what = mi2
-  postbuy_reset()
+  if (moneez - sfood[mi2] > 0) then
+    moneez -= sfood[mi2]
+    pov.holding = true
+    pov.what = mi2
+    postbuy_reset()
+  else
+   bzztno("not enough moneez")
+  end
 end
 
 function buy_critter()
-  moneez -= scost[mi2]
-  postbuy_reset()
+  if (moneez - scost[mi2] > 0) then
+    moneez -= scost[mi2]
+    postbuy_reset()
+  else
+    bzztno("not enough moneez")
+  end
 end
 
 function buy_server()
-  moneez -= ccost[mi2]
-  postbuy_reset()
+  if (moneez - ccost[mi2] > 0) then
+    moneez -= ccost[mi2]
+    postbuy_reset()
+  else
+    bzztno("not enough moneez")
+  end
 end
 
 function momenu()
